@@ -11,10 +11,12 @@ const model = new ChatOpenAI({
 });
 
 export async function translate(_: any, formData: FormData) {
-  const language = formData.get("language");
+  const startingLanguage = formData.get("startingLanguage");
+  const endLanguage = formData.get("endLanguage");
   const text = formData.get("text");
 
-  const systemTemplate = "Translate the following into {language}:";
+  const systemTemplate =
+    "Translate the following from {startingLanguage} into {endLanguage}:";
   const promptTemplate = ChatPromptTemplate.fromMessages([
     ["system", systemTemplate],
     ["user", "{text}"],
@@ -22,7 +24,8 @@ export async function translate(_: any, formData: FormData) {
 
   const chain = promptTemplate.pipe(model).pipe(parser);
   const result = await chain.invoke({
-    language,
+    startingLanguage,
+    endLanguage,
     text,
   });
 

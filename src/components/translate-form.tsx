@@ -1,7 +1,9 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useFormState, useFormStatus } from "react-dom";
-import { translate } from "./_actions/translate";
+import { translate } from "../app/_actions/translate";
 
 const initialState = {
   message: "",
@@ -13,16 +15,22 @@ export default function TranslateForm() {
 
   return (
     <form action={formAction} className="flex flex-col">
-      <input
+      <Input
         type="text"
-        name="language"
-        placeholder="language"
+        name="startingLanguage"
+        placeholder="Starting Language"
         className="text-black"
       />
-      <input type="text" name="text" placeholder="text" />
-      <button type="submit" disabled={pending}>
+      <Input
+        type="text"
+        name="endLanguage"
+        placeholder="End Language"
+        className="text-black"
+      />
+      <Input type="text" name="text" placeholder="text" />
+      <Button type="submit" disabled={pending}>
         {pending ? "Translating..." : "Translate"}
-      </button>
+      </Button>
       <p className="text-red-500">{state.message}</p>
     </form>
   );
